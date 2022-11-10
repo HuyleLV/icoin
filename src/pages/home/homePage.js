@@ -1,16 +1,24 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-const homePage = props => {
+const HomePage = () => {
     return (
-        <div>
-            
-        </div>
+         <div className='container'>
+            <div className="banner">
+                <div className="leftBox">
+                    hello w
+                </div>
+                <div className="rightBox">
+
+                </div>
+            </div>
+            <div className="roadMap">
+
+            </div>
+            <div className="listCoin">
+
+            </div>
+         </div>
     );
 };
 
-homePage.propTypes = {
-    
-};
-
-export default homePage;
+export default HomePage;
