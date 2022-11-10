@@ -14,8 +14,11 @@
   "author": "kbc",
   "license": "ISC",
   "dependencies": {
+    "@headlessui/react": "^1.7.4",
     "axios": "^1.1.3",
     "body-parser": "^1.20.1",
+    "bootstrap": "^4.6.2",
+    "concurrently": "^7.5.0",
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
@@ -29,7 +32,8 @@
     "react-redux": "^8.0.5",
     "react-router-dom": "^6.4.3",
     "react-scripts": "^5.0.1",
-    "redux": "^4.2.0"
+    "redux": "^4.2.0",
+    "redux-persist": "^6.0.0"
   },
   "proxy": "http://localhost:5000",
   "eslintConfig": {
@@ -51,11 +55,14 @@
     ]
   },
   "devDependencies": {
+    "autoprefixer": "^10.4.13",
     "babel-eslint": "^10.1.0",
     "braintree-web-drop-in": "^1.33.4",
     "eslint-plugin-react-hooks": "^4.2.0",
     "html-react-parser": "^3.0.4",
+    "postcss": "^8.4.18",
     "rand-token": "^1.0.1",
+    "tailwindcss": "^3.2.3",
     "web-vitals": "^3.0.4"
   }
 }
