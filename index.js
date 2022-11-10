@@ -11,4 +11,7 @@ app.use(cors());
 app.use(bodyparser.json());
 app.use(bodyparser.urlencoded({extended:true}));
 
+
+app.use("/user",require("./Route/user.route"));
+
 app.listen(port,()=>console.log(`App listening at http://localhost:${port}`))
