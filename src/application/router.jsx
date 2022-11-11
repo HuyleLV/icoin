@@ -4,11 +4,12 @@ import Header from "../components/common/header";
 import HomePage from "../pages/home/homePage";
 import Login from "../pages/Login/Login";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
+import Footer from './../components/common/footer';
 
 const Router = () => (
   <BrowserRouter>
     <Header />
-    <div style={{ height: 480 }}>
+    <div className="border-b">
       <Routes>
         <Route path="/home" element={<HomePage />} />
         <Route path="/login" element={<Login />} />
@@ -16,7 +17,7 @@ const Router = () => (
         <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
-    {/* <Footer /> */}
+    <Footer />
   </BrowserRouter>
 );
 
