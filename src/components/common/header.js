@@ -1,10 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Transition } from "@headlessui/react";
+import { useAuth } from "./../../hooks/useAuth";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const auth = useAuth();
+  // route 
+  const navigate = useNavigate();
+
+  const _handleLogout = () => {
+    localStorage.removeItem("_user");
+    navigate('/login')
+  }
+
+  useEffect(() => {
+    
+  }, [auth.auth]);
+
   return (
     <div>
       <nav className="bg-gray-800">
@@ -19,41 +34,49 @@ const Header = () => {
                 />
               </div>
               <div className="hidden md:block flex-1">
-                <div className="ml-20 flex items-baseline space-x-4 flex-shrink-1">
-                  <a
-                    href="#"
+                <div className="ml-20 flex justify-end items-baseline space-x-4 flex-shrink-1">
+                  <Link
                     className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
+                    to=""
                   >
                     Dashboard
-                  </a>
+                  </Link>
 
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Team
-                  </a>
+                  </Link>
 
-                  <a
+                  <Link
                     href="#"
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
                     Projects
-                  </a>
+                  </Link>
 
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    Calendar
-                  </a>
-
-                  <a
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                  >
-                    Login/Register
-                  </a>
+                  {auth.auth ? (
+                    <>
+                      <Link
+                        to="login"
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        style={{ width: "fit-content" }}
+                      >
+                        Tran Phi Anh
+                      </Link>
+                      <button className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={() => _handleLogout()}>
+                        Logout
+                      </button>
+                    </>
+                  ) : (
+                    <Link
+                      to="login"
+                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    >
+                      Login/Register
+                    </Link>
+                  )}
                 </div>
               </div>
             </div>

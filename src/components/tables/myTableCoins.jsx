@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { NumericFormat } from 'react-number-format';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
 
-const TableCoins = (props) => {
+const MyTableCoin = (props) => {
 
     // take props
     const { data, column } = props;
@@ -45,13 +45,13 @@ const TableCoins = (props) => {
             </div>
             <table className='border w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                 <thead className='bg-gray-50 border-b-2 border-gray-200'>
-                    <tr>
-                        <th className='p-3 text-sm font-semibold tracking-wide text-left'>COIN NAME</th>
-                        <th className='p-3 text-sm font-semibold tracking-wide text-right'>PRICE</th>
-                        <th className='p-3 text-sm font-semibold tracking-wide text-right'>24H CHANGE</th>
-                        <th className='p-3 text-sm font-semibold tracking-wide text-right'>24H VOLUME</th>
-                        <th className='p-3 text-sm font-semibold tracking-wide text-center'>Last 7 days</th>
-                        <th className='p-3 text-sm font-semibold tracking-wide text-right'>Market Cap</th>
+                    <tr className='w-full'>
+                        <th className='p-3 text-sm font-semibold tracking-wide text-left w-[150px]'>COIN NAME</th>
+                        <th className='p-3 text-sm font-semibold tracking-wide text-right  w-[150px]'>AMOUNT</th>
+                        <th className='p-3 text-sm font-semibold tracking-wide text-right'></th>
+                        <th className='p-3 text-sm font-semibold tracking-wide text-right'></th>
+                        <th className='p-3 text-sm font-semibold tracking-wide text-center'></th>
+                        <th className='p-3 text-sm font-semibold tracking-wide text-right'>ACTION</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,24 +67,22 @@ const TableCoins = (props) => {
                                         </div>
                                     </td>
                                     <td className='p-3 text-sm text-gray-700 text-right'><NumericFormat value={item.current_price} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
-                                    <td className={`p-3 text-sm text-gray-700 text-right ${item.market_cap_change_percentage_24h < 0 ? 'text-red-600' : 'text-green-500'}`}>{item.market_cap_change_percentage_24h < 0 ? item.market_cap_change_percentage_24h : `+${item.market_cap_change_percentage_24h}`}%</td>
-                                    <td className='p-3 text-sm text-gray-700 text-right'>
-                                        <NumericFormat value={item.total_volume} displayType={'text'} thousandSeparator={true} prefix={'$'} />
-                                    </td>
-                                    <td className="p-3 text-sm text-gray-700">
-                                        <Sparklines data={item.sparkline_in_7d.price}>
-                                            <SparklinesLine color="blue" />
-                                        </Sparklines>
-                                    </td>
-                                    <td className='p-3 text-sm text-gray-700 text-right'> <NumericFormat value={item.market_cap} displayType={'text'} thousandSeparator={true} prefix={'$'} /></td>
                                 </tr>
                             ))
                         ) : null
                     }
+                    <td className={`p-3 text-sm text-gray-700 text-right`}>haha%</td>
+                    <td className='p-3 text-sm text-gray-700 text-right'>
+                        haha
+                    </td>
+                    <td className="p-3 text-sm text-gray-700">
+                       ahahah
+                    </td>
+                    <td className='p-3 text-sm text-gray-700 text-right'>vcc</td>
                 </tbody>
             </table>
         </div>
     );
 };
 
-export default TableCoins;
+export default MyTableCoin;
