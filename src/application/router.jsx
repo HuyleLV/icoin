@@ -6,10 +6,13 @@ import HomePage from "../pages/home/homePage";
 import Login from "../pages/Login/Login";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
 import Register from "../pages/Register/Register";
-import TranferHistory from "../pages/Topwallet/TopWallet";
 import WalletCoin from "../pages/WalletCoin/WalletCoin";
 import Footer from './../components/common/footer';
 import KycUser from './../pages/kycUser/KycUser';
+import TranferHistory from './../pages/TranferHistory/TranferHistory';
+import TopWallet from './../pages/Topwallet/TopWallet';
+import MyTranferHistory from "../pages/MyTranferHistory/MyTranferHistory";
+import PeerToPeer from "../pages/PeerToPeer/PeerToPeer";
 
 const Router = () => {
 
@@ -17,32 +20,37 @@ const Router = () => {
   console.log(auth);
   return (
     <BrowserRouter>
-      <Header />
-      <div className="border-b" style={{ minHeight: '400px' }}>
-        <Routes>
-          {/* {
+      <div className="mainBox">
+        <Header />
+        <div className="border-b" style={{ minHeight: '400px', height: 'fit-content' }}>
+          <Routes>
+            {/* {
             !auth.auth ? (
               <> */}
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          {/* </> */}
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            {/* </> */}
             {/* ) : null
            } */}
-          <Route path="/home" element={<HomePage />} />
-          <Route path="/" element={<HomePage />} />
-          {/* {
+            <Route path="/home" element={<HomePage />} />
+            <Route path="/" element={<HomePage />} />
+            {/* {
             auth.auth ? (
               <> */}
-          <Route path="/kyc" element={<KycUser />} />
-          <Route path="/wallet" element={<WalletCoin />} />
-          {/* </>
+            <Route path="/kyc" element={<KycUser />} />
+            <Route path="/wallet" element={<WalletCoin />} />
+            {/* </>
             ) : null
           } */}
-          <Route path="*" element={<PageNotFound />} />
-          <Route path="/top-wallet" element={<TranferHistory />} />
-        </Routes>
+            <Route path="*" element={<PageNotFound />} />
+            <Route path="/trading-volume" element={<TranferHistory />} />
+            <Route path="/top-global" element={<TopWallet />} />
+            <Route path="/my-history" element={<MyTranferHistory />} />
+            <Route path="/peer-to-peer" element={<PeerToPeer />} />
+          </Routes>
+        </div>
+        <Footer />
       </div>
-      <Footer />
     </BrowserRouter>
   )
 };

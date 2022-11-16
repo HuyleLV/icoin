@@ -30,7 +30,7 @@ const TableCoins = (props) => {
     }, [data]);
 
     return (
-        <div className='h-screen w-full'>
+        <div className='h-full w-full'>
             <div className="flex justify-end">
                 <div className="mb-1 xl:w-96">
                     <div className="input-group relative flex flex-wrap items-stretch w-full mb-4">

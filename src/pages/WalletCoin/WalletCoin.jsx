@@ -6,7 +6,7 @@ import { useState } from 'react';
 const WalletCoin = () => {
 
   return (
-    <div className='w-full container mt-5'>
+    <div className='w-full container py-5'>
       <div className="boxHeader h-20 border text-white p-2 bg-[#563672] rounded">
         <p className='p-0 m-0'>Estimated assets value: </p>
         <p>--</p>

@@ -20,26 +20,27 @@ const Header = () => {
 
   useEffect(() => {}, [auth.auth]);
 
-  const [active, setActive] = useState('');
+  const [active, setActive] = useState("");
 
   useEffect(() => {
     switch (true) {
       case /wallet/.test(location.pathname):
-        setActive('wallet');
+        setActive("wallet");
         break;
       case /login/.test(location.pathname):
-        setActive('login');
+        setActive("login");
         break;
-      case /name-address-search/.test(location.pathname):
-        setActive('name-address-search');
+      case /trading-volume/.test(location.pathname):
+        setActive("trading-volume");
         break;
-      case /vehicle-search/.test(location.pathname):
-        setActive('vehicle-search');
+      case /top-global/.test(location.pathname):
+        setActive("top-global");
         break;
-      case /scan-pass/.test(location.pathname):
-        setActive('scan-pass');
+      case /peer-to-peer/.test(location.pathname):
+        setActive("peer-to-peer");
         break;
-      default: setActive('');
+      default:
+        setActive("");
     }
   }, [location, active]);
 
@@ -51,7 +52,7 @@ const Header = () => {
             <div className="flex items-center w-full px-16 container">
               <div className="flex-shrink-0 w-1/5">
                 <img
-                  onClick={() => navigate('/home')}
+                  onClick={() => navigate("/home")}
                   className="w-10"
                   style={{ width: "150px" }}
                   src="https://remitano.com/logo-new-white-small.png"
@@ -61,30 +62,47 @@ const Header = () => {
               <div className="hidden md:block w-4/5">
                 <div className="ml-20 flex justify-end items-baseline space-x-4 flex-shrink-1">
                   <Link
-                    className={`hover:bg-gray-700 ${active === 'wallet' ? 'text-white' : 'text-gray-300'} px-3 py-2 rounded-md text-sm font-medium`}
+                    style={{ textDecoration: "none" }}
+                    className={`hover:bg-purple-700 hover:text-white ${
+                      active === "wallet" ? "text-white" : "text-gray-300"
+                    } px-3 py-2 rounded-md text-sm font-medium`}
                     to="/wallet"
-                    onClick={() => setActive('wallet')}
+                    onClick={() => setActive("wallet")}
                   >
                     Wallet
                   </Link>
 
                   <Link
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    style={{ textDecoration: "none" }}
+                    to="/peer-to-peer"
+                    onClick={() => setActive("peer-to-peer")}
+                    className={`hover:bg-purple-700 hover:text-white ${
+                      active === "peer-to-peer" ? "text-white" : "text-gray-300"
+                    } px-3 py-2 rounded-md text-sm font-medium`}
                   >
                     P2P Trading
                   </Link>
 
                   <Link
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    style={{ textDecoration: "none" }}
+                    to="/top-global"
+                    onClick={() => setActive("top-global")}
+                    className={`hover:bg-purple-700 hover:text-white ${
+                      active === "top-global" ? "text-white" : "text-gray-300"
+                    } px-3 py-2 rounded-md text-sm font-medium no-underline`}
                   >
                     Top Global
                   </Link>
 
                   <Link
-                    href="#"
-                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                    style={{ textDecoration: "none" }}
+                    to="/trading-volume"
+                    onClick={() => setActive("trading-volume")}
+                    className={`hover:bg-purple-700 hover:text-white ${
+                      active === "trading-volume"
+                        ? "text-white"
+                        : "text-gray-300"
+                    } px-3 py-2 rounded-md text-sm font-medium`}
                   >
                     Trading Volume
                   </Link>
@@ -93,14 +111,14 @@ const Header = () => {
                     <>
                       <Link
                         to="login"
-                        onClick={() => setActive('login')}
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                        style={{ width: "fit-content" }}
+                        onClick={() => setActive("login")}
+                        className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        style={{ width: "fit-content", textDecoration: "none" }}
                       >
                         Tran Phi Anh
                       </Link>
                       <button
-                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         onClick={() => _handleLogout()}
                       >
                         Logout
@@ -108,8 +126,11 @@ const Header = () => {
                     </>
                   ) : (
                     <Link
+                      style={{ textDecoration: "none" }}
                       to="login"
-                      className={`hover:bg-gray-700 ${active === 'login' ? 'text-white' : 'text-gray-300'} px-3 py-2 rounded-md text-sm font-medium`}
+                      className={`hover:bg-purple-700 hover:text-white ${
+                        active === "login" ? "text-white" : "text-gray-300"
+                      } px-3 py-2 rounded-md text-sm font-medium`}
                     >
                       Login/Register
                     </Link>
@@ -178,35 +199,35 @@ const Header = () => {
               <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <a
                   href="#"
-                  className="hover:bg-gray-700 text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="hover:bg-purple-700 hover:text-white text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Dashboard
                 </a>
 
                 <a
                   href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Team
                 </a>
 
                 <a
                   href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Projects
                 </a>
 
                 <a
                   href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Calendar
                 </a>
 
                 <a
                   href="#"
-                  className="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Reports
                 </a>
