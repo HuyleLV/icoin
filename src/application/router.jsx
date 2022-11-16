@@ -6,6 +6,7 @@ import HomePage from "../pages/home/homePage";
 import Login from "../pages/Login/Login";
 import PageNotFound from "../pages/PageNotFound/PageNotFound";
 import Register from "../pages/Register/Register";
+import TranferHistory from "../pages/Topwallet/TopWallet";
 import WalletCoin from "../pages/WalletCoin/WalletCoin";
 import Footer from './../components/common/footer';
 import KycUser from './../pages/kycUser/KycUser';
@@ -38,6 +39,7 @@ const Router = () => {
             ) : null
           } */}
           <Route path="*" element={<PageNotFound />} />
+          <Route path="/top-wallet" element={<TranferHistory />} />
         </Routes>
       </div>
       <Footer />
