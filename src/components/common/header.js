@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import { useAuth } from "./../../hooks/useAuth";
 
@@ -8,71 +8,108 @@ const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const auth = useAuth();
-  // route 
+  // route
   const navigate = useNavigate();
+
+  const location = useLocation();
 
   const _handleLogout = () => {
     localStorage.removeItem("_user");
-    navigate('/login')
-  }
+    navigate("/login");
+  };
+
+  useEffect(() => {}, [auth.auth]);
+
+  const [active, setActive] = useState('');
 
   useEffect(() => {
-    
-  }, [auth.auth]);
+    switch (true) {
+      case /wallet/.test(location.pathname):
+        setActive('wallet');
+        break;
+      case /login/.test(location.pathname):
+        setActive('login');
+        break;
+      case /name-address-search/.test(location.pathname):
+        setActive('name-address-search');
+        break;
+      case /vehicle-search/.test(location.pathname):
+        setActive('vehicle-search');
+        break;
+      case /scan-pass/.test(location.pathname):
+        setActive('scan-pass');
+        break;
+      default: setActive('');
+    }
+  }, [location, active]);
 
   return (
     <div>
-      <nav className="bg-gray-800">
+      <nav className="bg-[#41225D]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
-            <div className="flex items-center w-full">
-              <div className="flex-shrink-0 flex-1">
+            <div className="flex items-center w-full px-16 container">
+              <div className="flex-shrink-0 w-1/5">
                 <img
-                  className="h-8 w-8"
-                  src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg"
+                  onClick={() => navigate('/home')}
+                  className="w-10"
+                  style={{ width: "150px" }}
+                  src="https://remitano.com/logo-new-white-small.png"
                   alt="Workflow"
                 />
               </div>
-              <div className="hidden md:block flex-1">
+              <div className="hidden md:block w-4/5">
                 <div className="ml-20 flex justify-end items-baseline space-x-4 flex-shrink-1">
                   <Link
-                    className=" hover:bg-gray-700 text-white px-3 py-2 rounded-md text-sm font-medium"
-                    to=""
+                    className={`hover:bg-gray-700 ${active === 'wallet' ? 'text-white' : 'text-gray-300'} px-3 py-2 rounded-md text-sm font-medium`}
+                    to="/wallet"
+                    onClick={() => setActive('wallet')}
                   >
-                    Dashboard
+                    Wallet
                   </Link>
 
                   <Link
                     href="#"
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
-                    Team
+                    P2P Trading
                   </Link>
 
                   <Link
                     href="#"
                     className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                   >
-                    Projects
+                    Top Global
+                  </Link>
+
+                  <Link
+                    href="#"
+                    className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    Trading Volume
                   </Link>
 
                   {auth.auth ? (
                     <>
                       <Link
                         to="login"
+                        onClick={() => setActive('login')}
                         className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         style={{ width: "fit-content" }}
                       >
                         Tran Phi Anh
                       </Link>
-                      <button className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium" onClick={() => _handleLogout()}>
+                      <button
+                        className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        onClick={() => _handleLogout()}
+                      >
                         Logout
                       </button>
                     </>
                   ) : (
                     <Link
                       to="login"
-                      className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                      className={`hover:bg-gray-700 ${active === 'login' ? 'text-white' : 'text-gray-300'} px-3 py-2 rounded-md text-sm font-medium`}
                     >
                       Login/Register
                     </Link>
