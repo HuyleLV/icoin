@@ -13,6 +13,7 @@ import TranferHistory from './../pages/TranferHistory/TranferHistory';
 import TopWallet from './../pages/Topwallet/TopWallet';
 import MyTranferHistory from "../pages/MyTranferHistory/MyTranferHistory";
 import PeerToPeer from "../pages/PeerToPeer/PeerToPeer";
+import Profile from "../pages/Profile/Profile";
 
 const Router = () => {
 
@@ -35,6 +36,17 @@ const Router = () => {
             <Route path="/home" element={<HomePage />} />
             <Route path="/" element={<HomePage />} />
             {/* {
+              <>
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+              </>
+            ) : null
+          }
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/profile" element={<Profile />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="*" element={<PageNotFound />} />
+          {
             auth.auth ? (
               <> */}
             <Route path="/kyc" element={<KycUser />} />
