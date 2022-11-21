@@ -48,9 +48,9 @@ const TopWallet = () => {
         
     }
 
-    useEffect(() => {
-        getTransferHistory(setTransferHistory);
-    }, []);
+    // useEffect(() => {
+    //     getTransferHistory(setTransferHistory);
+    // }, []);
 
     return (
         <>
