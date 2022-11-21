@@ -6,7 +6,7 @@ import { styleGlobal } from '../../utils/styleGloba';
 
 const TranferHistory = () => {
     const [TransferHistory, setTransferHistory] = useState([]);
-    // const [totalprice, settotalprice] = useState(0);
+    const [totaltransfer, settotaltransfer] = useState(0);
 
     const getTransferHistory = async () => {
         try {
@@ -21,20 +21,36 @@ const TranferHistory = () => {
         }
     };
 
-    const totalpricec = (totalcoin) => {
+      const getTotalTransfer = async () => {
+        try {
+          const res = await Axios.get(
+            "http://localhost:5000/api/v1/transfer/getTotalTransfer"
+          );
+          if (res) {
+            settotaltransfer(res.data.data.id);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      };
+
+      const totalpricec = (totalcoin) => {
         let totalPrice = parseFloat(totalcoin) * 0.3;
         return totalPrice;
     }
 
-    useEffect(() => {
-        getTransferHistory();
-    }, []);
+      useEffect(() => {
+            getTransferHistory();
+            totalpricec();
+            getTotalTransfer();
+        });
 
     return (
         <>
-            <div className='h-screen w-full container py-5'>
-                <div className="boxHeader h-20 border text-white p-2 bg-[#563672] rounded h-16" style={{background: styleGlobal.backgroundColor2}}>
-                    <p className='p-0 m-0'>Transfer History</p>
+            <div className='h-screen w-full container' style={{textAlign: "left", marginTop: "20px"}}>
+                <div style={{backgroundColor: "rgb(65 34 93)"}}>
+                    <h1 style={{ color: "white", padding: "15px"}}>Transfer History</h1>
+                    <h2 style={{ color: "white", padding: "15px"}}>Total transfer = {totaltransfer}</h2>
                 </div>
                 <table className='border w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                     <thead className='bg-gray-50 border-b-2 border-gray-200'>

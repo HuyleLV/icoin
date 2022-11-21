@@ -7,11 +7,45 @@ import { getTransferHistory } from '../../api/useTransferHistory';
 import { styleGlobal } from '../../utils/styleGloba';
 
 const TopWallet = () => {
-    const [transferHistory, setTransferHistory] = useState([]);
+    const [transferHistoryNTC, setTransferHistoryNTC] = useState([]);
+    const [transferHistoryNCO, setTransferHistoryNCO] = useState([]);
+    const [transferHistoryNUSD, setTransferHistoryNUSD] = useState([]);
+
+    
+    const [total_coin_NCO, setTotal_coin_NCO] = useState(0);
+    const [total_coin_NUSD, setTotal_coin_NUSD] = useState(0);
     // const [totalprice, settotalprice] = useState(0);
 
     const totalpricec = (totalcoin) => {
-        return parseFloat(totalcoin) * 0.3;
+        return totalcoin * 0.3;
+    }
+
+    const totalcoinNTC = () => {
+        let totalNTC = 0;
+        for ( let i=0; i < transferHistoryNTC.length; i++){
+            totalNTC += transferHistoryNTC[i].total_coin_NTC;
+        }
+        console.log(transferHistoryNTC[0]);
+        return totalNTC;
+        
+    }    
+    
+    const totalcoinNCO = () => {
+        let totalNCO = 0;
+        for ( let i=0; i < transferHistoryNCO.length; i++){
+            totalNCO += transferHistoryNCO[i].total_coin_NCO;
+        }
+        return totalNCO;
+        
+    }   
+    
+    const totalcoinNUSD = () => {
+        let totalNUSD = 0;
+        for ( let i=0; i < transferHistoryNUSD.length; i++){
+            totalNUSD += transferHistoryNUSD[i].total_coin_NUSD;
+        }
+        return totalNUSD;
+        
     }
 
     useEffect(() => {
@@ -80,13 +114,16 @@ const TopWallet = () => {
                     </thead>
                     <tbody>
                         {
-                            transferHistory && transferHistory.length ? (
-                                transferHistory.slice(0, 10).map((item, index) => (
+                            transferHistoryNTC && transferHistoryNTC.length ? (
+                                transferHistoryNTC.slice(0, 10).map((item, index) => (
+                                    
                                     <tr className='bg-white' key={item.id}>
                                         <td className='p-3 text-sm text-gray-700 text-center'><b>#{index + 1}</b></td>
-                                        <td className='p-3 text-sm text-gray-700 text-center'><b><Link to={``} style={{ color: "black" }}>{item.wallet_code}</Link></b></td>
-                                        <td className='p-3 text-sm text-gray-700 text-center'>{item.total_coin}<b style={{ color: "#0033CC" }}> NTC</b></td>
-                                        <td className='p-3 text-sm text-gray-700 text-center'>{totalpricec(item.total_coin)} <b style={{ color: "#0033CC" }}> USD</b></td>
+                                        <td className='p-3 text-sm text-gray-700 text-center'><b><Link to={``} style={{ color: "black" }}>{item.coin_code_NTC}</Link></b></td>
+                                        <td className='p-3 text-sm text-gray-700 text-center'>{item.total_coin_NTC}<b style={{ color: "#0033CC" }}> NTC</b></td>
+                                        <td className='p-3 text-sm text-gray-700 text-center'>{totalpricec(item.total_coin_NTC)} <b style={{ color: "#0033CC" }}> USD</b></td>
+                                        <td className='p-3 text-sm text-gray-700 text-center'>{item.total_coin_NTC} <b style={{ color: "#0033CC" }}> USD</b></td>
+                                        
                                     </tr>
                                 ))
                             ) : null
