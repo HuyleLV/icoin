@@ -3,8 +3,10 @@ import PropTypes from "prop-types";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Transition } from "@headlessui/react";
 import { useAuth } from "./../../hooks/useAuth";
-
-const Header = () => {
+import { styleGlobal } from "./../../utils/styleGloba";
+import { FaUserAlt, FaUserCircle } from "react-icons/fa";
+import { AiFillSetting, AiOutlineLogout, AiOutlineSetting } from "react-icons/ai";
+const Header = (onClose) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const auth = useAuth();
@@ -14,6 +16,7 @@ const Header = () => {
   const location = useLocation();
 
   const _handleLogout = () => {
+    setShowDropDown(false);
     localStorage.removeItem("_user");
     navigate("/login");
   };
@@ -21,6 +24,8 @@ const Header = () => {
   useEffect(() => {}, [auth.auth]);
 
   const [active, setActive] = useState("");
+
+  const [showDropDown, setShowDropDown] = useState(false);
 
   useEffect(() => {
     switch (true) {
@@ -46,7 +51,10 @@ const Header = () => {
 
   return (
     <div>
-      <nav className="bg-[#41225D]">
+      <nav
+        className="bg-purleCommon"
+        style={{ background: styleGlobal.backgroundCommon }}
+      >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             <div className="flex items-center w-full px-16 container">
@@ -60,18 +68,7 @@ const Header = () => {
                 />
               </div>
               <div className="hidden md:block w-4/5">
-                <div className="ml-20 flex justify-end items-baseline space-x-4 flex-shrink-1">
-                  <Link
-                    style={{ textDecoration: "none" }}
-                    className={`hover:bg-purple-700 hover:text-white ${
-                      active === "wallet" ? "text-white" : "text-gray-300"
-                    } px-3 py-2 rounded-md text-sm font-medium`}
-                    to="/wallet"
-                    onClick={() => setActive("wallet")}
-                  >
-                    Wallet
-                  </Link>
-
+                <div className="ml-20 flex justify-end items-center space-x-4 flex-shrink-1">
                   <Link
                     style={{ textDecoration: "none" }}
                     to="/peer-to-peer"
@@ -106,23 +103,62 @@ const Header = () => {
                   >
                     Trading Volume
                   </Link>
-
                   {auth.auth ? (
                     <>
                       <Link
+                        style={{ textDecoration: "none" }}
+                        className={`hover:bg-purple-700 hover:text-white ${
+                          active === "wallet" ? "text-white" : "text-gray-300"
+                        } px-3 py-2 rounded-md text-sm font-medium`}
+                        to="/wallet"
+                        onClick={() => setActive("wallet")}
+                      >
+                        Wallet
+                      </Link>
+                      {/* <Link
                         to="login"
                         onClick={() => setActive("login")}
-                        className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                        className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium flex items-center"
                         style={{ width: "fit-content", textDecoration: "none" }}
                       >
-                        Tran Phi Anh
-                      </Link>
-                      <button
+                        <FaUserAlt />
+                        Tran Phi ANh
+                      </Link> */}
+                      <div
+                        className="relative px-3 py-2 rounded-md text-sm font-medium flex items-center"
+                        onMouseLeave={() => setShowDropDown(!showDropDown)} onMouseEnter={() => setShowDropDown(true)}
+                      >
+                        <button
+                          className="dropDownSetting"
+                          onClick={() => setShowDropDown(!showDropDown)}
+                        >
+                          <AiOutlineSetting size={17} color="white" />
+                        </button>
+                        {showDropDown ? (
+                          <div
+                            className="absolute bg-white rounded-sm shadow top-8 h-20 w-24 text-center"
+                            style={{ left: "-50px" }}
+                          >
+                            <button className="hover:bg-slate-300 p-2 flex justify-around font-semibold items-center w-full" href="#">
+                              <FaUserAlt />
+                              Profile
+                            </button>
+                            <button
+                              className="hover:bg-slate-300 p-2 flex justify-around font-semibold items-center w-full"
+                              onClick={() => _handleLogout()}
+                            >
+                              <AiOutlineLogout />
+                              Logout
+                            </button>
+                          </div>
+                        ) : null}
+                      </div>
+                      {/* <button
                         className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white px-3 py-2 rounded-md text-sm font-medium"
                         onClick={() => _handleLogout()}
                       >
                         Logout
-                      </button>
+                      </button> */}
                     </>
                   ) : (
                     <Link
@@ -197,40 +233,46 @@ const Header = () => {
           {(ref) => (
             <div className="md:hidden" id="mobile-menu">
               <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a
+                <Link
                   href="#"
                   className="hover:bg-purple-700 hover:text-white text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
-                  Dashboard
-                </a>
+                  Home
+                </Link>
 
-                <a
+                <Link
                   href="#"
                   className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
-                  Team
-                </a>
+                  Wallet
+                </Link>
 
-                <a
+                <Link
                   href="#"
                   className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
-                  Projects
-                </a>
+                  P2P
+                </Link>
 
-                <a
+                <Link
                   href="#"
                   className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
-                  Calendar
-                </a>
+                  Top Global
+                </Link>
 
-                <a
+                <Link
                   href="#"
                   className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
-                  Reports
-                </a>
+                  Trading Volume
+                </Link>
+                <Link
+                  href="#"
+                  className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                >
+                  Login/Register
+                </Link>
               </div>
             </div>
           )}

@@ -1,76 +1,68 @@
 import React, { useState, useEffect } from 'react';
 import { AiFillLock } from 'react-icons/ai';
-import { NumericFormat } from 'react-number-format';
 import { useNavigate } from 'react-router-dom';
-import { Sparklines, SparklinesLine } from 'react-sparklines';
 import MyModal from '../common/Modal';
+import { useSelector } from 'react-redux';
 
 const MyTableCoin = (props) => {
 
     // take props
-    const { data, column } = props;
-
-    // list init array
-    const [lstSearch, setLstSearch] = useState([]);
+    const { data } = props;
 
     const navigate = useNavigate();
 
+    const { hasTransfer } = useSelector((state) => state.userReducer);
+
+    useEffect(() => {
+        setShowMyModal({
+            isShow: false
+        })
+    }, [hasTransfer])
+
+
     const [showMyModal, setShowMyModal] = useState({
         isShow: false,
+        type: '',
         title: "",
-        qrCode: "",
-        walletCode: "",
-        showWithDraw: ""
+        showWithDraw: "",
     });
 
-    // const [showWithDraw, setShowWithDraw] = useState(false);
-
-    // const [titleModal, setTitleModal] = useState('');
-
-    // const [walletCode, setWalletCode] = useState('');
-
-    const onChangeSearch = (text) => {
-        if (text && data.length > 0) {
-            const newArr = data.filter((item, index) =>
-                item.name.toLowerCase().includes(text) || item.symbol.toLowerCase().includes(text)
-            );
-            if (newArr) {
-                setLstSearch(newArr);
-            }
-        } else {
-            setLstSearch(data);
-        }
-    }
-
-    // clear state
-    useEffect(() => {
-        setLstSearch(data);
-        return () => setLstSearch([]);
-    }, [data]);
+    const [walletCode, setWalletCode] = useState('');
 
     const handleOnClose = () => {
         setShowMyModal({
             isShow: false,
-            qrCode: '',
+            type: '',
             showWithDraw: false,
             title: '',
-            walletCode: ''
         })
     };
 
-    const handleShowModalDeposit = (data) => {
-        if (data === 'deposit') {
+    const handleShowModalDeposit = (name, type) => {
+        switch (type) {
+            case 'NUSD':
+                setWalletCode(data.coin_code_NUSD);
+                break;
+            case 'NTC':
+                setWalletCode(data.coin_code_NTC);
+                break;
+            case 'NCO':
+                setWalletCode(data.coin_code_NCO);
+                break;
+            default:
+                break;
+        }
+        if (name === 'deposit') {
             setShowMyModal({
                 isShow: true,
-                qrCode: '',
+                type: type,
                 showWithDraw: false,
                 title: 'My Wallet Information',
-                walletCode: '0x123n9asdnl9as8vaslk9asdn9dasnld'
             })
         } else {
             setShowMyModal({
                 isShow: true,
-                qrCode: '',
+                type: type,
                 showWithDraw: true,
                 title: 'Transaction Information',
                 walletCode: ''
@@ -96,6 +88,40 @@ const MyTableCoin = (props) => {
                 <tbody>
                     <tr className='border-b'>
                         <td className='p-3 text-sm text-gray-700'>
+                            <div className='flex m-0 items-center justify-between'>
+                                <div className="boxContent flex items-center">
+                                    <img src="" className='w-5 h-5 rounded-full mr-1' />
+                                    <span className='uppercase font-bold mr-2 self-cente'>NUSD</span>
+                                    <span className='self-center text-gray-700 text-opacity-60'>(NCoin USD)</span>
+                                </div>
+                            </div>
+                        </td>
+                        <td className={`p-3 text-sm text-gray-700 text-center flex flex-col`}>
+                            <span className='text=black font-bold text-base'>
+                                {data?.total_coin_NUSD === 0 ? '00.00' : data?.total_coin_NUSD.toFixed(2)}
+                            </span>
+                            <span className='text-gray-500'>
+                                {data?.coin_price_NUSD * data?.total_coin_NUSD === 0 ? '00.00' : (data?.coin_price_NUSD * data?.total_coin_NUSD).toFixed(2)}$
+                            </span>
+                        </td>
+                        <td className='p-3 font-bold text-sm text-[#563672] text-center'>
+                            <button className='border rounded px-2 py-1' onClick={() => handleShowModalDeposit('deposit', 'NUSD')}>
+                                Deposit
+                            </button>
+                        </td>
+                        <td className='p-3 font-bold text-sm text-[#563672] text-center'>
+                            <button className='border rounded px-2 py-1' onClick={() => handleShowModalDeposit('withdraw', 'NUSD')}>
+                                Withdraw
+                            </button>
+                        </td>
+                        <td className="p-3 font-bold text-sm text-[#563672] text-center">
+                            <button className='border rounded px-2 py-1' onClick={() => _handleGoToHistory()}>
+                                History
+                            </button>
+                        </td>
+                    </tr>
+                    <tr className='border-b'>
+                        <td className='p-3 text-sm text-gray-700'>
                             <div className='flex m-0 items-center'>
                                 <img src="" className='w-5 h-5 rounded-full mr-1' />
                                 <span className='uppercase font-bold mr-2 self-cente'>NTC</span>
@@ -104,19 +130,19 @@ const MyTableCoin = (props) => {
                         </td>
                         <td className={`p-3 text-sm text-gray-700 text-center flex flex-col`}>
                             <span className='text=black font-bold text-base'>
-                                00.00
+                                {data?.total_coin_NTC === 0 ? '00.00' : data?.total_coin_NTC.toFixed(2)}
                             </span>
                             <span className='text-gray-500'>
-                                00.00$
+                                {data?.total_coin_NTC * data?.coin_price_NTC === 0 ? '00.00' : (data?.total_coin_NTC * data?.coin_price_NTC).toFixed(2)}$
                             </span>
                         </td>
                         <td className='p-3 font-bold text-sm text-[#563672] text-center'>
-                            <button className='border rounded px-2 py-1' onClick={() => handleShowModalDeposit('deposit')}>
+                            <button className='border rounded px-2 py-1' onClick={() => handleShowModalDeposit('deposit', 'NTC')}>
                                 Deposit
                             </button>
                         </td>
                         <td className='p-3 font-bold text-sm text-[#563672] text-center'>
-                            <button className='border rounded px-2 py-1' onClick={() => handleShowModalDeposit('withdraw')}>
+                            <button className='border rounded px-2 py-1' onClick={() => handleShowModalDeposit('withdraw', 'NTC')}>
                                 Withdraw
                             </button>
                         </td>
@@ -139,19 +165,19 @@ const MyTableCoin = (props) => {
                         </td>
                         <td className={`p-3 text-sm text-gray-700 text-center flex flex-col`}>
                             <span className='text=black font-bold text-base'>
-                                00.00
+                                {data?.total_coin_NCO === 0 ? '00.00' : data?.total_coin_NCO.toFixed(2)}
                             </span>
                             <span className='text-gray-500'>
-                                00.00$
+                                {data?.coin_price_NCO * data?.total_coin_NCO === 0 ? '00.00' : (data?.coin_price_NCO * data?.total_coin_NCO).toFixed(2)}$
                             </span>
                         </td>
                         <td className='p-3 font-bold text-sm text-[#563672] text-center'>
-                            <button className='border rounded px-2 py-1' onClick={() => handleShowModalDeposit('deposit')}>
+                            <button className='border rounded px-2 py-1' onClick={() => handleShowModalDeposit('deposit', 'NCO')}>
                                 Deposit
                             </button>
                         </td>
                         <td className='p-3 font-bold text-sm text-[#563672] text-center'>
-                            <button className='border rounded px-2 py-1'>
+                            <button className='border rounded px-2 py-1' onClick={() => handleShowModalDeposit('withdraw', 'NCO')}>
                                 Withdraw
                             </button>
                         </td>
@@ -444,7 +470,7 @@ const MyTableCoin = (props) => {
 
                 </tbody>
             </table>
-            <MyModal isWidthDraw={showMyModal.showWithDraw} title={showMyModal.title} walletCode={showMyModal.walletCode} visible={showMyModal.isShow} onClose={handleOnClose} />
+            <MyModal isWidthDraw={showMyModal.showWithDraw} walletCode={walletCode} title={showMyModal.title} type={showMyModal.type} visible={showMyModal.isShow} onClose={handleOnClose} allCoins={data} />
         </div>
     );
 };

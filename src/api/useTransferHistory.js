@@ -3,7 +3,7 @@ import axios from "axios";
 export const getTransferHistory = async (setTransferHistory) => {
   try {
     const res = await axios.get(
-      "http://localhost:5000/api/v1/transfer/getTopWallet"
+      `${process.env.REACT_APP_BASE_URL}/api/v1/transfer/getTopWallet`
     );
     if (res) {
       setTransferHistory(res.data.data);
@@ -19,7 +19,7 @@ export const getTransferHistory = async (setTransferHistory) => {
 export const getMyTransferHistory = async (setTransferHistory) => {
   try {
     const res = await axios.get(
-      "http://localhost:5000/api/v1/transfer/getHistoryTranfer"
+      `${process.env.REACT_APP_BASE_URL}/api/v1/transfer/getHistoryTranfer`
     );
     if (res) {
       setTransferHistory(res.data.data);

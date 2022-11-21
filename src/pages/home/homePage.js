@@ -2,12 +2,16 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import TableCoins from "./../../components/tables/tableCoins";
 import { getListCoin } from "./../../api/useGetCoin";
+import useDidMountEffect from './../../hooks/useDidMountEffect';
 
 const HomePage = () => {
   const [lstCoin, setLstCoin] = useState([]);
 
-  useEffect(() => {
+  const [lstCoins, setLstCoins] = useState('init');
+
+  useDidMountEffect(() => {
     getListCoin(setLstCoin);
+    setLstCoins('ahaah');
   }, []);
 
   return (
