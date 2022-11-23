@@ -1,9 +1,11 @@
 import { ADD_CHANGE_TRANSFER, CURRENT_USER } from "../actions/UserActions";
+import { UPDATE_LOADING } from './../actions/UserActions';
 
 const initialState = {
   currentUser: "",
   hasTransfer: false,
-  notification: ''
+  notification: '',
+  loadingGlobal: false
 };
 
 function userReducer(state = initialState, action) {
@@ -18,6 +20,11 @@ function userReducer(state = initialState, action) {
       return {
         ...state,
         hasTransfer: action.payload,
+      };
+    case UPDATE_LOADING:
+      return {
+        ...state,
+        loadingGlobal: action.payload,
       };
     default:
       return state;

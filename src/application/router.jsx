@@ -14,8 +14,8 @@ import PeerToPeer from "../pages/PeerToPeer/PeerToPeer";
 import ProtectedRoutes from "./ProtectRoutes";
 import Profile from './../pages/Profile/Profile';
 import { useDispatch, useSelector } from 'react-redux';
-import { addCurrentUser } from "../redux/actions/UserActions";
-import { useEffect } from 'react';
+import { BarLoader, DoubleBubble, SlidingPebbles } from 'react-spinner-animated';
+import 'react-spinner-animated/dist/index.css'
 
 const Router = () => {
   // const { currentUser } = useSelector((state) => state.userReducer);
@@ -28,8 +28,10 @@ const Router = () => {
 
   return (
     <BrowserRouter>
+      <Header />
+      {/* <DoubleBubble text={"Loading..."} bgColor={"#F0A500"}
+        center={true} width={"150px"} height={"150px"} /> */}
       <div className="mainBox">
-        <Header />
         <div className="border-b" style={{ minHeight: '400px', height: 'fit-content' }}>
           <Routes>
             <Route path="/login" element={<Login />} />

@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import MyModal from '../../components/common/Modal';
 import MyTableCoin from '../../components/tables/myTableCoins';
 import { useState } from 'react';
 import { styleGlobal } from '../../utils/styleGloba';
 import useWalletCoin from './useWalletCoin';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import ModalAlert from './modalAlert';
+import { addChangeTransfer } from '../../redux/actions/UserActions';
 
 const WalletCoin = () => {
 
@@ -12,7 +14,21 @@ const WalletCoin = () => {
 
   const { hasTransfer } = useSelector((state) => state.userReducer);
 
-  console.log(hasTransfer)
+  const [showAlertModal, setShowAlertModal] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const handleOnClose = () => {
+    dispatch(addChangeTransfer(false));
+    setShowAlertModal(false)
+  };
+
+  useEffect(() => {
+    if(hasTransfer) {
+      setShowAlertModal(true);
+    }
+  }, [hasTransfer])
+  
 
   return (
     <div className='w-full container py-5'>
@@ -29,6 +45,7 @@ const WalletCoin = () => {
       <div className="tableCoinHave mt-5">
         <MyTableCoin data={wallets} />
       </div>
+      <ModalAlert visible={showAlertModal} onClose={handleOnClose} />
     </div>
   )
 }

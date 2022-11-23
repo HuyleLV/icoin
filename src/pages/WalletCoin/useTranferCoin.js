@@ -9,14 +9,18 @@ export default function useTranferCoin() {
   const dispatch = useDispatch();
 
   const doSubmit = (dataTransfer) => {
-    console.log("data", dataTransfer);
     axios
       .post(
         `${process.env.REACT_APP_BASE_URL}/api/v1/transfer/postTrainsfer`,
         dataTransfer
       )
       .then((res) => {
-        dispatch(addChangeTransfer(true));
+        if (res.data.success) {
+          dispatch(addChangeTransfer(true));
+          console.log('zô')
+        } else {
+          setNotifi(res.data.mes);
+        }
       })
       .catch((e) => console.log(e));
   };

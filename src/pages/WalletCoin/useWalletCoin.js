@@ -13,7 +13,7 @@ export default function useWalletCoin() {
     const id = JSON.parse(_user).user_id;
     try {
       const res = await axios.post(
-        `${process.env.REACT_APP_BASE_URL}/api/v1/user/getMyWallet`,
+        `${process.env.REACT_APP_BASE_URL}/api/v1/user/getProfile`,
         { id }
       );
       if (res) {
@@ -26,6 +26,7 @@ export default function useWalletCoin() {
 
   const { hasTransfer } = useSelector((state) => state.userReducer);
 
+  console.log(wallets)
   useEffect(() => {
     getWallet();
   }, [hasTransfer]);

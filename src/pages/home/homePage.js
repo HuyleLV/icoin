@@ -3,15 +3,18 @@ import { useState } from "react";
 import TableCoins from "./../../components/tables/tableCoins";
 import { getListCoin } from "./../../api/useGetCoin";
 import useDidMountEffect from './../../hooks/useDidMountEffect';
+import { useDispatch } from 'react-redux';
+import { updateLoading } from "../../redux/actions/UserActions";
 
 const HomePage = () => {
   const [lstCoin, setLstCoin] = useState([]);
 
-  const [lstCoins, setLstCoins] = useState('init');
+  const dispatch = useDispatch();
 
   useDidMountEffect(() => {
+    dispatch(updateLoading(true));
     getListCoin(setLstCoin);
-    setLstCoins('ahaah');
+    dispatch(updateLoading(false));
   }, []);
 
   return (

@@ -470,7 +470,10 @@ const MyTableCoin = (props) => {
 
                 </tbody>
             </table>
-            <MyModal isWidthDraw={showMyModal.showWithDraw} walletCode={walletCode} title={showMyModal.title} type={showMyModal.type} visible={showMyModal.isShow} onClose={handleOnClose} allCoins={data} />
+            {
+                showMyModal.isShow &&
+                <MyModal isWidthDraw={showMyModal.showWithDraw} walletCode={walletCode} title={showMyModal.title} type={showMyModal.type} visible={showMyModal.isShow} onClose={handleOnClose} allCoins={data} />
+            }
         </div>
     );
 };

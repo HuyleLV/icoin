@@ -5,7 +5,11 @@ import { Transition } from "@headlessui/react";
 import { useAuth } from "./../../hooks/useAuth";
 import { styleGlobal } from "./../../utils/styleGloba";
 import { FaUserAlt, FaUserCircle } from "react-icons/fa";
-import { AiFillSetting, AiOutlineLogout, AiOutlineSetting } from "react-icons/ai";
+import {
+  AiFillSetting,
+  AiOutlineLogout,
+  AiOutlineSetting,
+} from "react-icons/ai";
 const Header = (onClose) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -126,7 +130,8 @@ const Header = (onClose) => {
                       </Link> */}
                       <div
                         className="relative px-3 py-2 rounded-md text-sm font-medium flex items-center"
-                        onMouseLeave={() => setShowDropDown(!showDropDown)} onMouseEnter={() => setShowDropDown(true)}
+                        onMouseLeave={() => setShowDropDown(!showDropDown)}
+                        onMouseEnter={() => setShowDropDown(true)}
                       >
                         <button
                           className="dropDownSetting"
@@ -139,7 +144,10 @@ const Header = (onClose) => {
                             className="absolute bg-white rounded-sm shadow top-8 h-20 w-24 text-center"
                             style={{ left: "-50px" }}
                           >
-                            <button className="hover:bg-slate-300 p-2 flex justify-around font-semibold items-center w-full" href="#">
+                            <button
+                              className="hover:bg-slate-300 p-2 flex justify-around font-semibold items-center w-full"
+                              onClick={() => navigate("/my-profile")}
+                            >
                               <FaUserAlt />
                               Profile
                             </button>
@@ -234,45 +242,61 @@ const Header = (onClose) => {
             <div className="md:hidden" id="mobile-menu">
               <div ref={ref} className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
                 <Link
-                  href="#"
+                  to="/home"
                   className="hover:bg-purple-700 hover:text-white text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Home
                 </Link>
 
                 <Link
-                  href="#"
-                  className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  Wallet
-                </Link>
-
-                <Link
-                  href="#"
+                  to="/peer-to-peer"
                   className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   P2P
                 </Link>
 
                 <Link
-                  href="#"
+                  to="/top-global"
                   className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Top Global
                 </Link>
 
                 <Link
-                  href="#"
+                  to="/trading-volume"
                   className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
                 >
                   Trading Volume
                 </Link>
-                <Link
-                  href="#"
-                  className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  Login/Register
-                </Link>
+                {auth.auth ? (
+                  <>
+                    <Link
+                      to="/wallet"
+                      className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    >
+                      Wallet
+                    </Link>
+                    <Link
+                      to="/my-profile"
+                      className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    >
+                      Profile
+                    </Link>
+                    <Link
+                      onClick={() => _handleLogout()}
+                      className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                    >
+                      Logout
+                    </Link>
+                  </>
+                ) : (
+                  <Link
+                    href="/login"
+                    className="text-gray-300 hover:bg-purple-700 hover:text-white hover:text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Login/Register
+                  </Link>
+                )}
               </div>
             </div>
           )}
