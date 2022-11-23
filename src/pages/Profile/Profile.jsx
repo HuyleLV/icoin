@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { getProfile } from '../../api/useGetProfile'
+import { styleGlobal } from '../../utils/styleGloba'
 const Profile = () => {
     const id = 9
     const [user, setUser] = useState([])
@@ -9,8 +10,11 @@ const Profile = () => {
     }, [])
 
     return (
+        <div className='w-full container py-5'>
+            <div className="boxHeader h-20 border text-white p-2 rounded h-16" style={{ background: styleGlobal.backgroundColor2 }}>
+                <p className='p-0 m-0'>Estimated assets value: </p>
+            </div>
 
-        <section className="antialiased bg-gray-100 text-gray-600 h-screen px-4 container">
             <div className="flex flex-col justify-center h-full">
 
                 <div className="w-full max-w-2xl mx-auto bg-white shadow-lg rounded-lg border border-gray-200">
@@ -64,7 +68,7 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
     )
 }
