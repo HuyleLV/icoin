@@ -56,7 +56,6 @@ export default function useKycUser() {
   }, []);
 
   const validate = (data) => {
-    console.log(data);
     if (
       data.fullname !== "" &&
       data.birthday !== "" &&
@@ -65,7 +64,6 @@ export default function useKycUser() {
       data.phonenumber !== "" &&
       data.image_drive !== ""
     ) {
-      console.log("false");
       return true;
     } 
     // =====
@@ -78,8 +76,6 @@ export default function useKycUser() {
         data.ssn_id !== "" &&
         data.image_ssn !== ""
       ) {
-        console.log("false 2");
-
         return true;
       }
     } 

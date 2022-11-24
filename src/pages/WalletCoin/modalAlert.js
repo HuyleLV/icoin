@@ -26,7 +26,7 @@ const ModalAlert = ({ visible, notification, onClose }) => {
             Transaction Validation!
           </p>
 
-          <div className="p-1 rounded codeWallet text-center flex flex-col items-center justify-center">
+          <div className="p-1 rounded codeWallet text-center flex flex-col items-center justify-center mt-[25px]">
             {!done ? (
               <Circles
                 height="120"
@@ -50,7 +50,7 @@ const ModalAlert = ({ visible, notification, onClose }) => {
             {done ? (
               <>
                 <button
-                  className="bg-purleCommon hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-[100px]"
+                  className="bg-purleCommon hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-[50px]"
                   onClick={handleOnClose}
                 >
                   Done 6/6

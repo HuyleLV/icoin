@@ -16,7 +16,6 @@ function userReducer(state = initialState, action) {
         currentUser: action.payload,
       };
     case ADD_CHANGE_TRANSFER:
-      console.log(action.payload)
       return {
         ...state,
         hasTransfer: action.payload,

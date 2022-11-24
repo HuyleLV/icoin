@@ -6,6 +6,8 @@ import { addChangeTransfer } from "../../redux/actions/UserActions";
 export default function useTranferCoin() {
   const [notifi, setNotifi] = useState("");
 
+  const [error, setError] = useState("");
+
   const dispatch = useDispatch();
 
   const doSubmit = (dataTransfer) => {
@@ -17,7 +19,6 @@ export default function useTranferCoin() {
       .then((res) => {
         if (res.data.success) {
           dispatch(addChangeTransfer(true));
-          console.log('zô')
         } else {
           setNotifi(res.data.mes);
         }

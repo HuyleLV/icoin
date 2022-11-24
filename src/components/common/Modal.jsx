@@ -12,14 +12,19 @@ const MyModal = ({ visible, onClose, title, isWidthDraw, walletCode, type, allCo
 
     const [numberUsd, setNumberUsd] = useState(0);
 
-    const [error, setError] = useState('');
+    const [numberCoinNUSD, setNumberCoinNUSD] = useState(0);
+
+    const [numberCoinNTC, setNumberCoinNTC] = useState(0);
+
+    const [numberCoinNCO, setNumberCoinNCO] = useState(0);
 
     const [numberCoin, setNumberCoin] = useState(0);
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
 
     const {
-        doSubmit
+        doSubmit,
+        notifi
     } = useTranferCoin();
 
     const handleOnClose = (e) => {
@@ -71,12 +76,15 @@ const MyModal = ({ visible, onClose, title, isWidthDraw, walletCode, type, allCo
 
     const handleGetAllCoins = () => {
         if (type === 'NUSD') {
+            setNumberCoinNUSD(allCoins.total_coin_NUSD);
             setNumberCoin(allCoins.total_coin_NUSD);
             setNumberUsd(allCoins.total_coin_NUSD * allCoins.coin_price_NUSD);
         } else if (type === 'NCO') {
+            setNumberCoinNCO(allCoins.total_coin_NCO);
             setNumberCoin(allCoins.total_coin_NCO);
             setNumberUsd(allCoins.total_coin_NCO * allCoins.coin_price_NCO);
         } else if (type === 'NTC') {
+            setNumberCoinNTC(allCoins.total_coin_NTC);
             setNumberCoin(allCoins.total_coin_NTC);
             setNumberUsd(allCoins.total_coin_NTC * allCoins.coin_price_NTC)
         } else {
@@ -94,7 +102,7 @@ const MyModal = ({ visible, onClose, title, isWidthDraw, walletCode, type, allCo
                     user_id: id,
                     transfer_wallet_code: allCoins.coin_code_NTC,
                     take_wallet_code: data.addessCode,
-                    total_coin_NTC: data.numberCoins,
+                    total_coin_NTC: data.numberCoins === "0" ? numberCoinNTC : data.numberCoins,
                 }
                 break;
             case 'NUSD':
@@ -102,7 +110,7 @@ const MyModal = ({ visible, onClose, title, isWidthDraw, walletCode, type, allCo
                     user_id: id,
                     transfer_wallet_code: allCoins.coin_code_NUSD,
                     take_wallet_code: data.addessCode,
-                    total_coin_NUSD: data.numberCoins,
+                    total_coin_NUSD: data.numberCoins === "0" ? numberCoinNUSD : data.numberCoins,
                 }
                 break;
             case 'NCO':
@@ -110,7 +118,7 @@ const MyModal = ({ visible, onClose, title, isWidthDraw, walletCode, type, allCo
                     user_id: id,
                     transfer_wallet_code: allCoins.coin_code_NCO,
                     take_wallet_code: data.addessCode,
-                    total_coin_NCO: data.numberCoins,
+                    total_coin_NCO: data.numberCoins === "0" ? numberCoinNCO : data.numberCoins,
                 }
                 break;
             default:
@@ -130,6 +138,13 @@ const MyModal = ({ visible, onClose, title, isWidthDraw, walletCode, type, allCo
                     <p className='text-center font-bold mt-1 text-lg'>
                         {title}
                     </p>
+                    {
+                        notifi ? (
+                            <div className="notificat flex justify-center">
+                                <p className={`text-center bg-red-500 min-w-[25%] rounded text-white`}>{notifi}</p>
+                            </div>
+                        ) : null
+                    }
                     {
                         !isWidthDraw ? (
                             <>

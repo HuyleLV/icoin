@@ -7,6 +7,10 @@ export default function useWalletCoin() {
 
   const [wallets, setWallets] = useState();
 
+  const [alert, setAlert] = useState('');
+
+  const [statusKyc, setStatusKyc] = useState(0);
+
   const [total, setTotal] = useState(0);
 
   const getWallet = async () => {
@@ -16,17 +20,17 @@ export default function useWalletCoin() {
         `${process.env.REACT_APP_BASE_URL}/api/v1/user/getProfile`,
         { id }
       );
-      if (res) {
+      if (res && res.data.success) {
         setWallets(res.data.data.wallet);
-      }
+        setStatusKyc(res.data.data.kyc.status)
+      } 
     } catch (error) {
-      console.log(error);
+      // setAlert('Something wrong, please check receiver address!')
     }
   };
 
   const { hasTransfer } = useSelector((state) => state.userReducer);
 
-  console.log(wallets)
   useEffect(() => {
     getWallet();
   }, [hasTransfer]);
@@ -44,5 +48,6 @@ export default function useWalletCoin() {
   return {
     wallets,
     total,
+    statusKyc,
   };
 }

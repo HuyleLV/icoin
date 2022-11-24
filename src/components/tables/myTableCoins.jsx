@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 const MyTableCoin = (props) => {
 
     // take props
-    const { data } = props;
+    const { data, statusKyc, alert } = props;
 
     const navigate = useNavigate();
 
@@ -29,6 +29,8 @@ const MyTableCoin = (props) => {
 
     const [walletCode, setWalletCode] = useState('');
 
+    const [alertError, setAlertError] = useState('');
+
     const handleOnClose = () => {
         setShowMyModal({
             isShow: false,
@@ -39,42 +41,66 @@ const MyTableCoin = (props) => {
     };
 
     const handleShowModalDeposit = (name, type) => {
-        switch (type) {
-            case 'NUSD':
-                setWalletCode(data.coin_code_NUSD);
-                break;
-            case 'NTC':
-                setWalletCode(data.coin_code_NTC);
-                break;
-            case 'NCO':
-                setWalletCode(data.coin_code_NCO);
-                break;
-            default:
-                break;
-        }
-        if (name === 'deposit') {
-            setShowMyModal({
-                isShow: true,
-                type: type,
-                showWithDraw: false,
-                title: 'My Wallet Information',
-            })
+        if (statusKyc === 2 || type === 'NUSD') {
+            setAlertError('');
+            switch (type) {
+                case 'NUSD':
+                    setWalletCode(data.coin_code_NUSD);
+                    break;
+                case 'NTC':
+                    setWalletCode(data.coin_code_NTC);
+                    break;
+                case 'NCO':
+                    setWalletCode(data.coin_code_NCO);
+                    break;
+                default:
+                    break;
+            }
+            if (name === 'deposit') {
+                setShowMyModal({
+                    isShow: true,
+                    type: type,
+                    showWithDraw: false,
+                    title: 'My Wallet Information',
+                })
+            } else {
+                setShowMyModal({
+                    isShow: true,
+                    type: type,
+                    showWithDraw: true,
+                    title: 'Transaction Information',
+                    walletCode: ''
+                })
+            }
         } else {
-            setShowMyModal({
-                isShow: true,
-                type: type,
-                showWithDraw: true,
-                title: 'Transaction Information',
-                walletCode: ''
-            })
+            setAlertError('Please verify your account before transaction!');
         }
     };
 
-    const _handleGoToHistory = () => {
-        navigate('/my-history')
+    const _handleGoToHistory = (data, nameCoin, price) => {
+        if (statusKyc === 2 || nameCoin === 'NUSD') {
+            setAlertError('');
+            navigate('/my-history', { state: { data: data, nameCoin: nameCoin, price: price } });
+        } else {
+            setAlertError('Please verify your account before transaction!')
+        }
     }
     return (
         <div className='h-full w-full'>
+            {
+                alertError ? (
+                    <div className="notificat flex justify-center">
+                        <p className={`text-center bg-red-500 p-[1px] min-w-[25%] rounded text-white`}>{alertError}</p>
+                    </div>
+                ) : null
+            }
+            {
+                alert ? (
+                    <div className="notificat flex justify-center">
+                        <p className={`text-center bg-red-500 p-[1px] min-w-[25%] rounded text-white`}>{alert}</p>
+                    </div>
+                ) : null
+            }
             <table className='border w-full text-sm text-left text-gray-500 dark:text-gray-400'>
                 <thead className='bg-gray-50 border-b-2 border-gray-200'>
                     <tr className='w-full'>
@@ -115,17 +141,22 @@ const MyTableCoin = (props) => {
                             </button>
                         </td>
                         <td className="p-3 font-bold text-sm text-[#563672] text-center">
-                            <button className='border rounded px-2 py-1' onClick={() => _handleGoToHistory()}>
+                            <button className='border rounded px-2 py-1' onClick={() => _handleGoToHistory(data?.coin_code_NUSD, 'NUSD', data?.coin_price_NUSD)}>
                                 History
                             </button>
                         </td>
                     </tr>
                     <tr className='border-b'>
                         <td className='p-3 text-sm text-gray-700'>
-                            <div className='flex m-0 items-center'>
-                                <img src="" className='w-5 h-5 rounded-full mr-1' />
-                                <span className='uppercase font-bold mr-2 self-cente'>NTC</span>
-                                <span className='self-center text-gray-700 text-opacity-60'>(NCoin)</span>
+                            <div className='flex m-0 items-center justify-between'>
+                                <div className="boxContent flex items-center">
+                                    <img src="" className='w-5 h-5 rounded-full mr-1' />
+                                    <span className='uppercase font-bold mr-2 self-cente'>NTC</span>
+                                    <span className='self-center text-gray-700 text-opacity-60'>(NCoin)</span>
+                                </div>
+                                {
+                                    statusKyc !== 2 ? (<AiFillLock className='ml-2' />) : null
+                                }
                             </div>
                         </td>
                         <td className={`p-3 text-sm text-gray-700 text-center flex flex-col`}>
@@ -147,7 +178,7 @@ const MyTableCoin = (props) => {
                             </button>
                         </td>
                         <td className="p-3 font-bold text-sm text-[#563672] text-center">
-                            <button className='border rounded px-2 py-1' onClick={() => _handleGoToHistory()}>
+                            <button className='border rounded px-2 py-1' onClick={() => _handleGoToHistory(data?.coin_code_NTC, 'NTC', data?.coin_price_NTC)}>
                                 History
                             </button>
                         </td>
@@ -182,7 +213,7 @@ const MyTableCoin = (props) => {
                             </button>
                         </td>
                         <td className="p-3 font-bold text-sm text-[#563672] text-center">
-                            <button className='border rounded px-2 py-1' onClick={() => _handleGoToHistory()}>
+                            <button className='border rounded px-2 py-1' onClick={() => _handleGoToHistory(data?.coin_code_NCO, 'NCO', data?.coin_price_NCO)}>
                                 History
                             </button>
                         </td>

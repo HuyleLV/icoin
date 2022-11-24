@@ -10,7 +10,6 @@ const GoogleLoginButton = () => {
                 const data = await Axios.get('https://www.googleapis.com/oauth2/v3/userinfo',
                     { headers: { "Authorization": `Bearer ${codeResponse.access_token}` } }
                 )
-                console.log(data)
             } catch (error) {
 
             }

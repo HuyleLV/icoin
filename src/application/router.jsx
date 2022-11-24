@@ -28,11 +28,11 @@ const Router = () => {
 
   return (
     <BrowserRouter>
-      <Header />
       {/* <DoubleBubble text={"Loading..."} bgColor={"#F0A500"}
         center={true} width={"150px"} height={"150px"} /> */}
-      <div className="mainBox">
-        <div className="border-b" style={{ minHeight: '400px', height: 'fit-content' }}>
+      <div className="mainBox flex flex-col justify-between" style={{height: '100vh'}}>
+        <Header />
+        <div className="border-b" style={{height: 'fit-content'}}>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />

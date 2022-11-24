@@ -10,7 +10,7 @@ import { addChangeTransfer } from '../../redux/actions/UserActions';
 
 const WalletCoin = () => {
 
-  const { total, wallets } = useWalletCoin();
+  const { total, wallets, statusKyc, alert } = useWalletCoin();
 
   const { hasTransfer } = useSelector((state) => state.userReducer);
 
@@ -20,7 +20,7 @@ const WalletCoin = () => {
 
   const handleOnClose = () => {
     dispatch(addChangeTransfer(false));
-    setShowAlertModal(false)
+    setShowAlertModal(false);
   };
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const WalletCoin = () => {
       </div>
 
       <div className="tableCoinHave mt-5">
-        <MyTableCoin data={wallets} />
+        <MyTableCoin data={wallets} statusKyc={statusKyc} alert={alert} />
       </div>
       <ModalAlert visible={showAlertModal} onClose={handleOnClose} />
     </div>
