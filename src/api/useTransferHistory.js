@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const getTransferHistoryNTC = async (setTransferHistoryNTC) => {
+export const getTransferHistoryNTC = async (setTransferHistoryNTC, setTransferData) => {
   try {
     const res = await axios.get(
       "http://localhost:5000/api/v1/transfer/getTopWalletNTC"
@@ -8,6 +8,7 @@ export const getTransferHistoryNTC = async (setTransferHistoryNTC) => {
 
     if (res) {
       setTransferHistoryNTC(res.data.data);
+      setTransferData(res.data.data);
     }
 
   } catch (error) {
@@ -15,7 +16,7 @@ export const getTransferHistoryNTC = async (setTransferHistoryNTC) => {
   }
 };
 
-export const getTransferHistoryNCO = async (setTransferHistoryNCO) => {
+export const getTransferHistoryNCO = async (setTransferHistoryNCO, setTransferData) => {
   try {
     const res = await axios.get(
       "http://localhost:5000/api/v1/transfer/getTopWalletNCO"
@@ -23,6 +24,7 @@ export const getTransferHistoryNCO = async (setTransferHistoryNCO) => {
 
     if (res) {
       setTransferHistoryNCO(res.data.data);
+      setTransferData(res.data.data);
     }
   } catch (error) {
     console.log(error);
@@ -32,13 +34,14 @@ export const getTransferHistoryNCO = async (setTransferHistoryNCO) => {
   };
 };
 
-export const getTransferHistoryNUSD = async (setTransferHistoryNUSD) => {
+export const getTransferHistoryNUSD = async (setTransferHistoryNUSD, setTransferData) => {
   try {
     const res = await axios.get(
       "http://localhost:5000/api/v1/transfer/getTopWalletNUSD"
     );
     if (res) {
       setTransferHistoryNUSD(res.data.data);
+      setTransferData(res.data.data);
     }
   } catch (error) {
     console.log(error);
@@ -62,4 +65,19 @@ export const getMyTransferHistory = async (setTransferHistory) => {
   return {
     setTransferHistory,
   };
+};
+
+export const searchTopWalletByCoin = async (setTransferData, text, type) => {
+  try {
+    const res = await axios.post(
+      `${process.env.REACT_APP_BASE_URL}/api/v1/transfer/searchTopWalletByCoin`, {
+        text, type
+      }
+    );
+    if (res) {
+      setTransferData(res.data.data);
+    }
+  } catch (error) {
+    console.log(error);
+  }
 };

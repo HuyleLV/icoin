@@ -30,7 +30,7 @@ const Router = () => {
     <BrowserRouter>
       {/* <DoubleBubble text={"Loading..."} bgColor={"#F0A500"}
         center={true} width={"150px"} height={"150px"} /> */}
-      <div className="mainBox flex flex-col justify-between" style={{height: '100vh'}}>
+      <div className="mainBox flex flex-col justify-between" style={{height: '100%'}}>
         <Header />
         <div className="border-b" style={{height: 'fit-content'}}>
           <Routes>
