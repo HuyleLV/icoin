@@ -5,6 +5,7 @@ import next from "../../assets/next.png"
 import { styleGlobal } from '../../utils/styleGloba';
 import Pagination from '../../components/common/Pagination';
 import useDidMountEffect from '../../hooks/useDidMountEffect';
+import useDebounce from './../../hooks/useDebound';
 
 const TranferHistory = () => {
     const [TransferHistory, setTransferHistory] = useState([]);
@@ -16,6 +17,16 @@ const TranferHistory = () => {
     const [offet, setOffset] = useState(0);
 
     const [count, setCount] = useState(0);
+
+    const [textSearch, setTextSearch] = useState('');
+
+    const query = useDebounce(textSearch, 500);
+
+    useEffect(() => {
+        if(query != '') {
+            searchData(query)
+        }
+    }, [query]);
 
     const getTransferHistory = async () => {
         try {
@@ -31,6 +42,27 @@ const TranferHistory = () => {
             console.log(error);
         }
     };
+
+    const searchData = async (text) => {
+        try {
+            const res = await Axios.post(
+                `${process.env.REACT_APP_BASE_URL}/api/v1/transfer/searchHistoryTransfer`, {
+                text
+            }
+            );
+            if (res && res.data.success) {
+                const newData = res.data.data;
+                setTransferHistory(newData);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    const _handleSearch = (e) => {
+        setTextSearch(e.target.value);
+    }
+
     const getTransferHistoryInit = async () => {
         try {
             const res = await Axios.post(
@@ -66,18 +98,29 @@ const TranferHistory = () => {
     }
 
     const _handleSelectPage = (e) => {
+        setTextSearch('');
         setOffset(1);
         setSelectedPage(e.target.value);
-        console.log(TransferHistory.length)
         const count = Math.ceil((TransferHistory.length) / e.target.value);
         setCount(count);
     }
 
-    const paginate = data => {
+    const _handlePaginate = data => {
         setOffset(data);
     }
 
-    console.log(offet);
+    const _handlePrev = () => {
+        if (offet > 1) {
+            setOffset(offet - 1);
+        }
+    }
+
+    const _handleNext = () => {
+        if (offet !== count) {
+            setOffset(offet + 1);
+        }
+    }
+
     return (
         <>
             <div className='w-full container py-5 h-[50%]'>
@@ -127,7 +170,7 @@ const TranferHistory = () => {
                                 </path>
                             </svg>
                         </span>
-                        <input placeholder="Search"
+                        <input placeholder="Search" value={textSearch} onChange={_handleSearch}
                             className="appearance-none rounded-r rounded-l sm:rounded-l-none border border-gray-400 border-b block pl-8 pr-6 py-2 w-full bg-white text-sm placeholder-gray-400 text-gray-700 focus:bg-white focus:placeholder-gray-600 focus:text-gray-700 focus:outline-none" />
                     </div>
                 </div>
@@ -161,7 +204,7 @@ const TranferHistory = () => {
                         }
                     </tbody>
                 </table>
-                <Pagination count={count} paginate={paginate} />
+                <Pagination count={count} paginate={_handlePaginate} next={_handleNext} prev={_handlePrev} />
             </div>
         </>
     )
