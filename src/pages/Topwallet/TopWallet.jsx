@@ -3,7 +3,7 @@ import GoogleLoginButton from '../../components/common/googleLoginButton'
 import Axios from "axios";
 import { BrowserRouter as Router, Route, Link, NavLink } from "react-router-dom";
 import next from "../../assets/next.png"
-import { getTransferHistory } from '../../api/useTransferHistory';
+import { getTransferHistory, getTransferHistoryNCO, getTransferHistoryNTC, getTransferHistoryNUSD } from '../../api/useTransferHistory';
 import { styleGlobal } from '../../utils/styleGloba';
 
 const TopWallet = () => {
