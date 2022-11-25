@@ -16,6 +16,12 @@ import Profile from './../pages/Profile/Profile';
 import { useDispatch, useSelector } from 'react-redux';
 import { BarLoader, DoubleBubble, SlidingPebbles } from 'react-spinner-animated';
 import 'react-spinner-animated/dist/index.css'
+import EmailVerify from "../components/common/EmailVerify";
+import HeaderAboutUs from "../pages/footer/HeaderAboutUs";
+import Careers from "../pages/footer/Careers";
+import Escrow_service from "../pages/footer/Escrow_service";
+import Press from "../pages/footer/Press";
+import AboutUs from "../pages/footer/AboutUs";
 
 const Router = () => {
   // const { currentUser } = useSelector((state) => state.userReducer);
@@ -30,13 +36,16 @@ const Router = () => {
     <BrowserRouter>
       {/* <DoubleBubble text={"Loading..."} bgColor={"#F0A500"}
         center={true} width={"150px"} height={"150px"} /> */}
-      <div className="mainBox flex flex-col justify-between" style={{height: '100%'}}>
+      <div className="mainBox flex flex-col justify-between" style={{ height: '100%' }}>
         <Header />
-        <div className="border-b" style={{height: 'fit-content'}}>
+        <div className="border-b" style={{ height: 'fit-content' }}>
           <Routes>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/home" element={<HomePage />} />
+
+            <Route path="/user/:id/verify/:code_verify" element={<EmailVerify />} />
+
             <Route path="/" element={<HomePage />} />
             <Route path="*" element={<PageNotFound />} />
             <Route element={<ProtectedRoutes />}>
@@ -48,6 +57,13 @@ const Router = () => {
             <Route path="/trading-volume" element={<TranferHistory />} />
             <Route path="/top-global" element={<TopWallet />} />
             <Route path="/peer-to-peer" element={<PeerToPeer />} />
+
+            <Route path="/about" element={<HeaderAboutUs />}>
+              <Route path="" element={<AboutUs />} />
+              <Route path="careers" element={<Careers />} />
+              <Route path="escrow-service" element={<Escrow_service />} />
+              <Route path="press" element={<Press />} />
+            </Route>
           </Routes>
         </div>
         <Footer />

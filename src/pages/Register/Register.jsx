@@ -1,17 +1,25 @@
-import React from 'react'
-import GoogleLoginButton from '../../components/common/googleLoginButton'
+import React, { useState } from 'react'
+import GoogleRegisterButton from '../../components/common/googleRegisterButton'
 import { styleGlobal } from '../../utils/styleGloba'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import useRegister from './useRegister';
 import { useForm } from 'react-hook-form';
+import useRegisterGoogle from './useRegisterGoogle';
+
 
 const Register = () => {
-
+    const [errorRegisterGoogle, setErrorRegisterGoogle] = useState('');
+    const [responseRegisterGoogle, setResponseRegisterGoogle] = useState({})
     const { register, handleSubmit, formState: { errors } } = useForm();
 
-    const { doSubmit, error } = useRegister();
 
-    register.
+    const navigate = useNavigate();
+    const { doSubmit, error } = useRegister();
+    if (error && error.success) {
+        navigate('/')
+    }
+
+
     return (
         <div className="container h-[600px] flex flex-col min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8 borde">
             <div className="w-full max-w-md space-y-8 max-w-[20rem]">
@@ -22,6 +30,7 @@ const Register = () => {
                         <Link to="/login" className="font-medium text-indigo-600 hover:text-indigo-500"> Sign In</Link>
                     </p>
                 </div>
+                <div className='text-red-500 text-center'>{responseRegisterGoogle?.res?.mes}</div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit(doSubmit)}>
                     <input type="hidden" name="remember" value="true" />
                     <div className="-space-y-px rounded-md shadow-sm">
@@ -34,11 +43,11 @@ const Register = () => {
                             <input id="password" required {...register("password")} name="password" type="password" className="relative rounded block w-full appearance-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Password" />
                         </div>
                         <div className='my-2'>
-                            <label htmlFor="password" className="sr-only">Confirm Password</label>
-                            <input id="confirm-password" required {...register("confirm-password")} name="confirmPassword" type="password" autoComplete="current-password" className="relative rounded block w-full appearance-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Confirm Password" />
+                            <label htmlFor="confirm-password" className="sr-only">Confirm Password</label>
+                            <input id="confirm-password" required {...register("confirmPassword")} name="confirmPassword" type="password" autoComplete="current-password" className="relative rounded block w-full appearance-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Confirm Password" />
                         </div>
                         <div className='my-2'>
-                            <input id="referral-code" name="referralCode" required {...register("referral-code")} type="text" className="relative rounded block w-full appearance-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Referral Code (Optional)" />
+                            <input id="referral-code" name="referralCode" {...register("codeReferInput")} type="text" className="relative rounded block w-full appearance-none border border-gray-300 px-3 py-2 text-gray-900 placeholder-gray-500 focus:z-10 focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm" placeholder="Referral Code (Optional)" />
                         </div>
                     </div>
 
@@ -49,9 +58,11 @@ const Register = () => {
                     </div>
                 </form>
                 <div className='w-full'>
-                    <GoogleLoginButton />
+                    <GoogleRegisterButton setResponseRegisterGoogle={setResponseRegisterGoogle} setErrorRegisterGoogle={setErrorRegisterGoogle} />
                 </div>
+
             </div>
+
         </div>
     )
 }

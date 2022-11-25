@@ -5,6 +5,7 @@ import { getListCoin } from "./../../api/useGetCoin";
 import useDidMountEffect from './../../hooks/useDidMountEffect';
 import { useDispatch } from 'react-redux';
 import { updateLoading } from "../../redux/actions/UserActions";
+import { Outlet } from "react-router-dom";
 
 const HomePage = () => {
   const [lstCoin, setLstCoin] = useState([]);

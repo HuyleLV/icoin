@@ -3,9 +3,20 @@ import React, { useEffect, useState } from 'react'
 import { styleGlobal } from '../../utils/styleGloba'
 import useProfile from './useProfile';
 import { Link } from 'react-router-dom';
-const Profile = () => {
 
+import ModalCodeRefer from './ModalCodeRefer'
+import { getProfile } from '../../api/useGetProfile'
+const Profile = () => {
+    const id = 9
     const { profile } = useProfile();
+    const [user, setUser] = useState([])
+    const [resCodeRefer, setResCodeRefer] = useState({})// lay err tu nhap code refer
+    const [showModal, setShowModal] = React.useState(true);//show modal
+    useEffect(() => {
+        // getProfile(setUser, id)
+
+    }, [])
+    console.log(resCodeRefer)
 
     return (
         <div className='w-full container py-5'>
@@ -66,6 +77,11 @@ const Profile = () => {
                     </div>
                 </div>
             </div>
+            {showModal ? (
+                <ModalCodeRefer setShowModal={setShowModal}
+                    setResCodeRefer={setResCodeRefer}
+                />
+            ) : null}
         </div>
 
     )

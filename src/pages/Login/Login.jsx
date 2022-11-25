@@ -11,7 +11,7 @@ import { styleGlobal } from '../../utils/styleGloba';
 const Login = () => {
 
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
-
+    const [errorLoginGoogle, setErrorLoginGoogle] = useState({})
     const [error, setError] = useState('');
 
     const navigate = useNavigate();
@@ -36,6 +36,7 @@ const Login = () => {
             }
         }
     }
+    // console.log('check login', errorLoginGoogle)
 
     return (
         <div className="container h-[600px] flex flex-col min-h-full items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
@@ -47,6 +48,7 @@ const Login = () => {
                         <Link to="/register" className="font-medium text-indigo-600 hover:text-indigo-500"> Sign Up</Link>
                     </p>
                 </div>
+                <div className='text-red-500 text-center'>{errorLoginGoogle ? errorLoginGoogle?.res?.mes : ''}</div>
                 <form className="mt-8 space-y-6" onSubmit={handleSubmit(onSubmit)}>
                     <div className="-space-y-px rounded-md shadow-sm">
                         <div className='my-2'>
@@ -77,7 +79,7 @@ const Login = () => {
                     </div>
                 </form>
                 <div className='w-full'>
-                    <GoogleLoginButton />
+                    <GoogleLoginButton setErrorLoginGoogle={setErrorLoginGoogle} />
                 </div>
             </div>
         </div>

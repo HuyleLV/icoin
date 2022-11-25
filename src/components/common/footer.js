@@ -21,6 +21,11 @@ const Footer = () => {
                 NCoin
               </span>
             </Link>
+            <div className="mt-4">
+              <div>© 2021-2022, NCOIN</div>
+              <div>All rights reserved.</div>
+              <div>Babylon Solutions LLC</div>
+            </div>
           </div>
           <div className="flex justify-between flex-1 gap-8 sm:gap-6 sm:grid-cols-3">
             <div>
@@ -28,6 +33,14 @@ const Footer = () => {
                 ABOUT US
               </h2>
               <ul className="text-white">
+                <li>
+                  <Link
+                    href="https://tailwindcss.com/"
+                    className="hover:underline text-white"
+                  >
+                    About Us
+                  </Link>
+                </li>
                 <li>
                   <Link
                     href="https://tailwindcss.com/"
@@ -66,14 +79,6 @@ const Footer = () => {
                     className="hover:underline text-white"
                   >
                     Remitano Pay
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    href="https://tailwindcss.com/"
-                    className="hover:underline text-white"
-                  >
-                    Merchant Directory
                   </Link>
                 </li>
                 <li>

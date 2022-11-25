@@ -25,7 +25,7 @@ const Header = (onClose) => {
     navigate("/login");
   };
 
-  useEffect(() => {}, [auth.auth]);
+  useEffect(() => { }, [auth.auth]);
 
   const [active, setActive] = useState("");
 
@@ -77,9 +77,8 @@ const Header = (onClose) => {
                     style={{ textDecoration: "none" }}
                     to="/peer-to-peer"
                     onClick={() => setActive("peer-to-peer")}
-                    className={`hover:bg-purple-700 hover:text-white ${
-                      active === "peer-to-peer" ? "text-white" : "text-gray-300"
-                    } px-3 py-2 rounded-md text-sm font-medium`}
+                    className={`hover:bg-purple-700 hover:text-white ${active === "peer-to-peer" ? "text-white" : "text-gray-300"
+                      } px-3 py-2 rounded-md text-sm font-medium`}
                   >
                     P2P Trading
                   </Link>
@@ -88,9 +87,8 @@ const Header = (onClose) => {
                     style={{ textDecoration: "none" }}
                     to="/top-global"
                     onClick={() => setActive("top-global")}
-                    className={`hover:bg-purple-700 hover:text-white ${
-                      active === "top-global" ? "text-white" : "text-gray-300"
-                    } px-3 py-2 rounded-md text-sm font-medium no-underline`}
+                    className={`hover:bg-purple-700 hover:text-white ${active === "top-global" ? "text-white" : "text-gray-300"
+                      } px-3 py-2 rounded-md text-sm font-medium no-underline`}
                   >
                     Top Global
                   </Link>
@@ -99,11 +97,10 @@ const Header = (onClose) => {
                     style={{ textDecoration: "none" }}
                     to="/trading-volume"
                     onClick={() => setActive("trading-volume")}
-                    className={`hover:bg-purple-700 hover:text-white ${
-                      active === "trading-volume"
+                    className={`hover:bg-purple-700 hover:text-white ${active === "trading-volume"
                         ? "text-white"
                         : "text-gray-300"
-                    } px-3 py-2 rounded-md text-sm font-medium`}
+                      } px-3 py-2 rounded-md text-sm font-medium`}
                   >
                     Trading Volume
                   </Link>
@@ -111,9 +108,8 @@ const Header = (onClose) => {
                     <>
                       <Link
                         style={{ textDecoration: "none" }}
-                        className={`hover:bg-purple-700 hover:text-white ${
-                          active === "wallet" ? "text-white" : "text-gray-300"
-                        } px-3 py-2 rounded-md text-sm font-medium`}
+                        className={`hover:bg-purple-700 hover:text-white ${active === "wallet" ? "text-white" : "text-gray-300"
+                          } px-3 py-2 rounded-md text-sm font-medium`}
                         to="/wallet"
                         onClick={() => setActive("wallet")}
                       >
@@ -172,9 +168,8 @@ const Header = (onClose) => {
                     <Link
                       style={{ textDecoration: "none" }}
                       to="login"
-                      className={`hover:bg-purple-700 hover:text-white ${
-                        active === "login" ? "text-white" : "text-gray-300"
-                      } px-3 py-2 rounded-md text-sm font-medium`}
+                      className={`hover:bg-purple-700 hover:text-white ${active === "login" ? "text-white" : "text-gray-300"
+                        } px-3 py-2 rounded-md text-sm font-medium`}
                     >
                       Login/Register
                     </Link>

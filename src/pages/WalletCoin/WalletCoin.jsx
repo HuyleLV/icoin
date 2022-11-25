@@ -24,11 +24,11 @@ const WalletCoin = () => {
   };
 
   useEffect(() => {
-    if(hasTransfer) {
+    if (hasTransfer) {
       setShowAlertModal(true);
     }
   }, [hasTransfer])
-  
+
 
   return (
     <div className='w-full container py-5'>
